@@ -1,86 +1,123 @@
 @extends('layouts.layout')
 @section('content')
+<style>
+    .btn-success,
+    .btn-success:hover,
+    .btn-success:active,
+    .btn-success:visited {
+        background-color: #0EA44D !important;
+        border-color: #0EA44D !important;
+    }
+
+</style>
+<link rel="stylesheet" href="{{ url('assets/home/css/adminlte.min.css')}}">
 <!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper p-4">
-    <div class=" content-header">
-        <div class="row mb-2">
-            <div class="col-sm-6 ml-1">
+<div class="wrapper p-4" style="background-color: #F5F5F5">
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="{{url('/')}}">Beranda</a></li>
                     <li class="breadcrumb-item"><a href="{{url('/merch')}}">Merchandise</a></li>
                     <li class="breadcrumb-item active">{{ $data->nama_produk}}</li>
                 </ol>
-            </div><!-- /.col -->
-        </div><!-- /.row -->
-    </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
     <!-- /.content-header -->
 
-    <section class="content p-2 ">
-        <div class="card card-solid p-2">
+    <section class="content">
+        <div class="card card-solid">
             <div class="card-body">
                 <div class="row">
                     <div class="col-12 col-sm-6">
-                        <h3 class="d-inline-block d-sm-none">LOWA Men’s Renegade GTX Mid Hiking Boots Review</h3>
+                        <h3 class="d-inline-block d-sm-none">{{$data->nama_produk}}</h3>
                         <div class="col-12">
-                            <img src="{{ asset('assets/home/img/merchandise/'.$data->images)}}" class="product-image" alt="Product Image">
+                            <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+                                <div class="carousel-inner">
+                                    <div class="carousel-item active">
+                                        <img src="{{$data->images[0]}}" class="product-image" alt="Product Image">
+                                    </div>
+                                    @foreach ( $data->images as $image)
+                                    <div class="carousel-item">
+                                        <img src="{{$image}}" class="product-image" alt="Product Image">
+                                    </div>
+                                    @endforeach
+                                </div>
+                                <button class="carousel-control-prev" type="button" data-target="#carouselExampleControls" data-slide="prev">
+                                    <span class="carousel-control-prev-icon bg-success" aria-hidden="true"></span>
+                                    <span class="sr-only">Previous</span>
+                                </button>
+                                <button class="carousel-control-next" type="button" data-target="#carouselExampleControls" data-slide="next">
+                                    <span class="carousel-control-next-icon bg-success" aria-hidden="true"></span>
+                                    <span class="sr-only">Next</span>
+                                </button>
+                            </div>
                         </div>
-                        <div class="col-12 product-image-thumbs mt-5">
-                            <ul class="list-inline">
-                                <li class="list-inline-item"><img src="{{ asset('assets/home/img/merchandise/'.$data->images)}}" style="width: 100px" alt="Product Image"></li>
-                                <li class="list-inline-item"><img src="{{ asset('assets/home/img/merchandise/'.$data->images)}}" style="width: 100px" alt="Product Image"></li>
-                                <li class="list-inline-item"><img src="{{ asset('assets/home/img/merchandise/'.$data->images)}}" style="width: 100px" alt="Product Image"></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-12 col-sm-6">
-                        <h2 class="mt-3">{{$data->nama_produk}}</h2>
-                        {{-- <ul class="list-inline">
-                            <li class="list-inline-item "><img src="{{ url('assets/home/img/merchandise/star.png')}}" style="width: 30px; margin-bottom: 10px; margin-right: -8px" alt=""></li>
-                        <li class="list-inline-item">
-                            <h5>4.9</h5>
-                        </li>
-                        <li class="list-inline-item">
-                            <h5>Terjual</h5>
-                        </li>
-                        </ul> --}}
-                        <ul class="list-inline">
-                            <li class="list-inline-item">
-                                {{-- <h4 class="text-secondary"><del>Rp {{number_format($data->harga, 0,'', '.')}}</del></h4> --}}
-                            </li>
-                            <li class="list-inline-item">
-                                <h3>Rp {{number_format($data->harga, 0,'', '.')}}</h3>
-                            </li>
-                            <li class="list-inline-item">
-                                <h4 class="mb-4">
-                                    <span class="badge bg-danger mb-2">30%</span></h4>
-                            </li>
-                        </ul>
-                        <h5 class="mt-4">Detail Produk</h5>
-                        <p>{{$data->details}}</p>
-                        <hr>
-                        <ul class="list-inline">
-                            <li class="list-inline-item tw-3">Tersedia :</li>
-                            <li class="list-inline-item tw-3"><a type="button" href="#" class="btn btn-outline-secondary btn-sm"><img src="http://127.0.0.1:8000/assets/home/img/merchandise/shopee.png" alt=""></a></li>
-                            <li class="list-inline-item tw-3"><a type="button" href="#" class="btn btn-outline-secondary btn-sm"><img src="http://127.0.0.1:8000/assets/home/img/merchandise/tokped.png" alt=""></a></li>
-                        </ul>
-                        <div class="mt-4">
-                            <a type="button" class="btn btn-success" href="">Pesan Sekarang</a>
-                        </div>
+                        <div class="col-12 product-image-thumbs">
+                            @foreach ( $data->images as $image)
+                            <div class="product-image-thumb active"><img src="{{$image}}" alt="Product Image"></div>
+                            @endforeach
+                            {{-- <div class="product-image-thumb"><img src="{{$data->images[1]}}" alt="Product Image"></div>
+                        <div class="product-image-thumb"><img src="{{$data->images[2]}}" alt="Product Image"></div>
+                        <div class="product-image-thumb"><img src="{{$data->images[3]}}" alt="Product Image"></div> --}}
                     </div>
                 </div>
-                <div class="row mt-4">
+                <div class="col-12 col-sm-6">
+                    <h2 class="mt-3">{{$data->nama_produk}}</h2>
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h5 style="font-weight: 600;">Rp. {{number_format($data->harga, 0,'', '.')}}
+                                <span class="badge text-danger me-1" style="background-color: rgba(255, 200, 200, 1)">15%</span>
+                            </h5>
+                        </div>
+                    </div>
+                    <h5 class="mt-4">Detail Produk</h5>
+                    <p style="color: #888888; font-size: 12px">{{$data->details}}</p>
+                    <hr>
                     <ul class="list-inline">
-                        <li class="list-inline-item">Bagikan ke:</li>
-                        <li class="list-inline-item"><a href="#"><img src="{{ url('assets/home/img/merchandise/fb.png')}}" alt=""></a></li>
-                        <li class="list-inline-item"><a href="#"><img src="{{ url('assets/home/img/merchandise/twitter.png')}}" alt=""></a></li>
-                        <li class="list-inline-item"><a href="#"><img src="{{ url('assets/home/img/merchandise/wa.png')}}" alt=""></a></li>
+                        <li class="list-inline-item">Tersedia :</li>
+                        <li class="list-inline-item" style="margin-left: -10px"><a type="button" href="https://shopee.co.id/bumdes.id" class="btn btn-sm"><img src="http://127.0.0.1:8000/assets/home/img/merchandise/shopee.png" alt=""></a></li>
+                        <li class="list-inline-item" style="margin-left: -30px"><a type="button" href="https://www.tokopedia.com/bumdesid" class="btn btn-sm"><img src="http://127.0.0.1:8000/assets/home/img/merchandise/tokped.png" alt=""></a></li>
                     </ul>
+                    <hr>
+                    <div class="mt-4">
+                        <a type="button" class="btn btn-success" href="">Pesan Sekarang</a>
+                    </div>
                 </div>
             </div>
-            <!-- /.card-body -->
+            <div class="row mt-4">
+                <ul class="list-inline">
+                    <li class="list-inline-item">Bagikan ke:</li>
+                    <li class="list-inline-item"><a href="#"><img src="{{ url('assets/home/img/merchandise/fb.png')}}" alt=""></a></li>
+                    <li class="list-inline-item"><a href="#"><img src="{{ url('assets/home/img/merchandise/twitter.png')}}" alt=""></a></li>
+                    <li class="list-inline-item"><a href="#"><img src="{{ url('assets/home/img/merchandise/wa.png')}}" alt=""></a></li>
+                </ul>
+            </div>
         </div>
-        <!-- /.card -->
-    </section>
-    <!-- /.content -->
+        <!-- /.card-body -->
 </div>
+<!-- /.card -->
+</section>
+<!-- /.content -->
+</div>
+<!-- jQuery -->
+<script src="{{ url('assets/user/jquery/jquery.min.js')}}"></script>
+<!-- Bootstrap 4 -->
+<script src=" {{ url('assets/user/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+<!-- AdminLTE App -->
+<script src="{{ url('assets/user/js/adminlte.min.js')}}"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="{{ url('assets/user/js/demo.js')}}"></script>
+<script>
+    $(document).ready(function() {
+        $('.product-image-thumb').on('click', function() {
+            var $image_element = $(this).find('img')
+            $('.product-image').prop('src', $image_element.attr('src'))
+            $('.product-image-thumb.active').removeClass('active')
+            $(this).addClass('active')
+        })
+    })
+
+</script>
 @stop
